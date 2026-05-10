@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AYouTube TV</string>
+    <string name="search_hint">Search YouTube…</string>
+    <string name="error_load">Failed to load. Check internet connection.</string>
+</resources>

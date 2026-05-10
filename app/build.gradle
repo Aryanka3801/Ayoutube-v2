@@ -1,0 +1,91 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.myapp'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.myapp"
+        minSdk 21
+        targetSdk 34
+        versionCode 4
+        versionName "4.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug   { minifyEnabled false; debuggable true }
+        release { minifyEnabled false
+                  proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' }
+    }
+
+    compileOptions {
+        // REQUIRED: java.time back-compat on API 28
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/LICENSE.md',
+                'META-INF/LICENSE-notice.md',
+                'META-INF/NOTICE.md',
+                'META-INF/DEPENDENCIES',
+                'META-INF/*.kotlin_module',
+                'META-INF/INDEX.LIST',
+            ]
+        }
+    }
+
+    buildFeatures { buildConfig true }
+}
+
+dependencies {
+    // ── Desugar (MUST be correct artifact name) ────────────────────────
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+
+    // ── MultiDex ───────────────────────────────────────────────────────
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // ── AndroidX core ──────────────────────────────────────────────────
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.fragment:fragment:1.6.2'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'com.google.android.material:material:1.11.0'
+
+    // ── Leanback TV UI ─────────────────────────────────────────────────
+    implementation 'androidx.leanback:leanback:1.0.0'
+
+    // ── Media3 ExoPlayer — 1.2.1 is well-tested on API 28 ─────────────
+    def media3 = '1.5.0'
+    implementation "androidx.media3:media3-exoplayer:$media3"
+    implementation "androidx.media3:media3-exoplayer-hls:$media3"
+    implementation "androidx.media3:media3-exoplayer-dash:$media3"
+    implementation "androidx.media3:media3-ui:$media3"
+    implementation "androidx.media3:media3-common:$media3"
+    implementation "androidx.media3:media3-datasource-okhttp:$media3"
+
+    // ── NewPipe Extractor ──────────────────────────────────────────────
+    implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.26.0'
+
+    // ── OkHttp ───────────────────────────────────────────────────────
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
+    // ── Glide ─────────────────────────────────────────────────────────
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
+    // ── RxJava3 ───────────────────────────────────────────────────────
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+
+    // ── Tests ─────────────────────────────────────────────────────────
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
